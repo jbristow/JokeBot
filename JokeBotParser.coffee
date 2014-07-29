@@ -1,5 +1,7 @@
 fs = require("fs")
 
+filename = "openbsd"
+
 symbol =
   BEGIN: '--BEGIN--'
   EOJ: '--EOJ--'
@@ -21,7 +23,7 @@ Array::remove = (from, to) ->
   @length = (if from < 0 then @length + from else from)
   @push.apply this, rest
 
-fs.readFile "openbsd.txt", "utf8", (err, data) ->
+fs.readFile "#{filename}.txt", "utf8", (err, data) ->
   return console.log(err)  if err
  
   lines = data.split '\n%\n'
@@ -54,8 +56,8 @@ fs.readFile "openbsd.txt", "utf8", (err, data) ->
         wordB = word 
         prevWord = "#{wordA} #{wordB}" 
 
-  fs.writeFile("openbsd.starters.json",JSON.stringify(data: starters))
-  fs.writeFile("openbsd.json", JSON.stringify followMap, null, 2)
+  fs.writeFile("#{filename}.starters.json",JSON.stringify(data: starters))
+  fs.writeFile("#{filename}.json", JSON.stringify followMap, null, 2)
 
   return
 

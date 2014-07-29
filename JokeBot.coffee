@@ -1,10 +1,15 @@
+fs = require "fs"
+
 getRandom = (arr) ->
   arr[Math.floor(Math.random() * arr.length)]
 
+
 class fortuneGenerator
+  constructor: (@filename) ->
+
   generateFortune: ->
-    followMap = require "./openbsd.json"
-    starters = require "./openbsd.starters.json"
+    followMap = JSON.parse(fs.readFileSync("#{@filename}.json", 'utf8')); 
+    starters = JSON.parse(fs.readFileSync("#{@filename}.starters.json", 'utf8')); 
     output = ""
     prevPair= getRandom(starters.data)
     current = prevPair.split(" ")[1]
@@ -27,6 +32,5 @@ class fortuneGenerator
     else
       out = "#{prev} #{current}"
     out
-    
 
-module.exports = new fortuneGenerator()
+module.exports = new fortuneGenerator("openbsd")
